@@ -11,8 +11,8 @@ services:
     volumes:
       - .:/app
   mongo:
-      image: mongo
-      volumes:
-        - ./mongodb/data/db
-      ports:
-        - '27017:27017'
+    image: mongo
+    volumes:
+      - ${PWD}/mongodb/data/db:/data/db
+    ports:
+      - '27017:27017'
