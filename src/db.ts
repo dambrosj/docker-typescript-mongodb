@@ -2,7 +2,7 @@ import { Request, Response, ErrorRequestHandler } from "express";
 const mongoose = require("mongoose");
 
 const connect = async () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     mongoose
       .connect(process.env.mongoDB, {
         useNewUrlParser: true,

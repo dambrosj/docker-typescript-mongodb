@@ -6,7 +6,7 @@ const app = express();
 
 import { connect } from "./db";
 import { register } from "./register";
-import { Member } from "./models/member";
+// import { Member } from "./models/member.ts";
 
  connect().then(() => {
   app.use(bodyParser.json());
@@ -17,7 +17,7 @@ import { Member } from "./models/member";
   });
 
   app.get("/members", async (req: Request, res: Response) => {
-    const members = await Member.find().select("firstName lastName");
+    const members = { "pippo":"è tornato" }; //await Member.find().select("firstName lastName");
     return res.send(members);
   });
 

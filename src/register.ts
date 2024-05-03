@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 
-import { Member } from "./models/member";
+//import { Member } from "./models/member";
 
 const register = async (req: Request, res: Response) => {
   const { email, password, firstName, lastName } = req.body;
@@ -21,67 +21,67 @@ const register = async (req: Request, res: Response) => {
   const registrationDate = new Date(new Date().toUTCString());
 
   try {
-    // Verify email doesn't already exist
-    const member = await Member.findOne({ email });
-    if (member !== null)
-      return res.send({
-        error: true,
-        message: "The email specified already exists"
-      });
+    // // Verify email doesn't already exist
+    // const member = await Member.findOne({ email });
+    // if (member !== null)
+    //   return res.send({
+    //     error: true,
+    //     message: "The email specified already exists"
+    //   });
 
-    let username =
-      firstName.trim().toLowerCase() + "-" + lastName.trim().toLowerCase();
-    // strip out non-alpha numeric, dots, hyphens, underscores
-    username = username.replace(/  +/g, " ");
-    username = username.replace(/\s/g, "-");
-    username = username.replace(/[^a-z-0-9.-_]+/gi, "");
-    if (username === "") username = "new-member";
-    username = await getUniqueUsername(username);
+    // let username =
+    //   firstName.trim().toLowerCase() + "-" + lastName.trim().toLowerCase();
+    // // strip out non-alpha numeric, dots, hyphens, underscores
+    // username = username.replace(/  +/g, " ");
+    // username = username.replace(/\s/g, "-");
+    // username = username.replace(/[^a-z-0-9.-_]+/gi, "");
+    // if (username === "") username = "new-member";
+    // username = await getUniqueUsername(username);
 
-    const newMember = await new Member({
-      email,
-      username,
-      password: encryptedPassword,
-      firstName,
-      lastName,
-      active,
-      salt,
-      registrationDate
-    }).save();
+    // const newMember = await new Member({
+    //   email,
+    //   username,
+    //   password: encryptedPassword,
+    //   firstName,
+    //   lastName,
+    //   active,
+    //   salt,
+    //   registrationDate
+    // }).save();
 
-    return res.send({ error: false, member: newMember });
+    return res.send({ error: false, member: {"pippo":"registrato"} });
   } catch (err) {
     console.error(err);
   }
 };
 
 async function getUniqueUsername(username: string) {
-  const members = await Member.find({
-    username: { $regex: new RegExp(`^${username}`, "i") }
-  });
+  // const members = await Member.find({
+  //   username: { $regex: new RegExp(`^${username}`, "i") }
+  // });
 
-  if (members) {
-    let usernameMatchFound;
-    let usernameExists = false;
+  // if (members) {
+  //   let usernameMatchFound;
+  //   let usernameExists = false;
 
-    do {
-      usernameMatchFound = false;
+  //   do {
+  //     usernameMatchFound = false;
 
-      members.forEach(member => {
-        if (member.username === username) {
-          usernameMatchFound = true;
-          usernameExists = true;
-          username = incrementUserName(username);
-        }
-      });
+  //     // members.forEach(member: MemberType => {
+  //     //   if (member.username === username) {
+  //     //     usernameMatchFound = true;
+  //     //     usernameExists = true;
+  //     //     username = incrementUserName(username);
+  //     //   }
+  //     // });
 
-      if (!usernameMatchFound) {
-        usernameExists = false;
-      }
-    } while (usernameExists);
-  }
+  //     if (!usernameMatchFound) {
+  //       usernameExists = false;
+  //     }
+  //   } while (usernameExists);
+  // }
 
-  return username;
+  return "pippo";
 }
 
 function incrementUserName(username: string) {
