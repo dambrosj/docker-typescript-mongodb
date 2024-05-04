@@ -1,4 +1,4 @@
-FROM node:10-alpine as base
+FROM node:14-alpine as base
 ENV NODE_ENV=production
 
 EXPOSE 80
@@ -6,7 +6,7 @@ EXPOSE 80
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production \
-    && npm cache clean --force
+  && npm cache clean --force
 ENV PATH /app/node_modules/.bin:$PATH
 
 FROM base as dev
@@ -20,4 +20,4 @@ RUN tsc
 
 FROM base as prod
 COPY --from=build /app/dist/ .
-CMD ["node", "src/index.js"]
+CMD ["node", "dist/index.js"]
